@@ -34,4 +34,37 @@
         - Percentage (positive/negative)
 
 
+---
+
+# Backend API Docs v0.1
+- Everything under /api/v0.1/
+
+## Authentication
+
+## Trades CRUD
+- POST /api/v0.1/trades
+    - Provide auth headers  
+POST Body
+``` json
+{
+    "trade": {
+        "item_traded": {
+            "item_name": "potatoes",
+            "opening_price": 1,
+            "closing_price": 1,
+            "high_price": 1,
+            "low_price": 1
+        },
+        "trade_notes": {
+            "rating": 4,
+            "notes": "This was a really good day"
+        },
+        "starting_money": 1,
+        "ending_money": 10,
+        "date": {
+            "date": "24/04/2020"
+        }
+    }
+}
+```
 
