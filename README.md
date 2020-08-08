@@ -1,6 +1,8 @@
 # Trade Logger
+
 ## Requirements
-- Compare the money in vs the money out
+
+* Compare the money in vs the money out
     - A way to log it
     - For every trade 
         - Calculate daily/weekly amounts
@@ -19,7 +21,8 @@
         - Low price
 
 ## Data
-- Trades
+
+* Trades
     - Item traded
         - Opening price
         - Closing price
@@ -33,23 +36,44 @@
     - Win/loss (determined automatically)
         - Percentage (positive/negative)
 
-
 ---
 
 # Backend API Docs v0.1
-- Everything under /api/v0.1/
+
+* Everything under /api/v0.1/
 
 ## Authentication
 
+* POST /users/login
+
+``` json
+{
+    "username": "testuser",
+    "password": "password"
+}
+```
+
+* For every single protected route, auth headers 
+
+need to be included
+
+``` HTTP
+Authorization: Basic base64(<username>:<password>)
+```
+
 ## Trades CRUD
-- POST /api/v0.1/trades
-    - Provide auth headers  
-POST Body
+
+* POST /trade
+    - Provide auth headers
+        - This will also link the trades to each user
+
+POST Request Body
+
 ``` json
 {
     "trade": {
         "item_traded": {
-            "item_name": "potatoes",
+            "item_description": "potatoes",
             "opening_price": 1,
             "closing_price": 1,
             "high_price": 1,
@@ -65,6 +89,86 @@ POST Body
             "date": "24/04/2020"
         }
     }
+}
+```
+
+* GET /trade
+    - Provide auth headers
+        - TODOs: 
+            - Implement pagination based on a time frame 
+            - Implement pagination based on amounts
+
+GET Response Body
+
+``` json
+{
+    "trades": [
+        {
+            trade_id:"1",
+            "item_traded": {
+                "item_trade_id":"1",
+                "item_description": "potatoes",
+                "opening_price": 1,
+                "closing_price": 1,
+                "high_price": 1,
+                "low_price": 1
+            },
+            "trade_notes": {
+                "trade_notes":"1",
+                "rating": 4,
+                "notes": "This was a really good day"
+            },
+            "starting_money": 1,
+            "ending_money": 10,
+            "day": {
+                "trade_day_id":"1",
+                "date": "24/04/2020"
+            }
+        }
+    ],
+    "amount":"1",
+    "lifetime-win-loss":"50%"
+}
+```
+
+* PUT /trade?id=xxx
+    - Provide auth headers
+
+PUT Request Body
+``` json
+{
+    "trade": {
+        "trade_id":"1",
+        "item_traded": {
+            "item_trade_id":"1",
+            "item_description": "potatoes",
+            "opening_price": 1,
+            "closing_price": 1,
+            "high_price": 1,
+            "low_price": 1
+        },
+        "trade_notes": {
+            "trade_note_id";"1",
+            "rating": 4,
+            "notes": "This was a really good day"
+        },
+        "starting_money": 1,
+        "ending_money": 10,
+        "day": {
+            "trade_day_id":1,
+            "date": "24/04/2020"
+        }
+    }
+}
+
+```
+
+* DELETE /trade?id=xxx
+    - Provide auth headers
+
+```json
+{
+    "trade_id":"1"
 }
 ```
 
