@@ -45,7 +45,9 @@
 ## Authentication
 
 * POST /users/login
-
+    - Responds with 200 if successful
+    - Responds with 401 for wrong creds
+POST Request Body
 ``` json
 {
     "username": "testuser",
@@ -53,9 +55,19 @@
 }
 ```
 
-* For every single protected route, auth headers 
+* POST /users/register
+    - Eventually, want to integrate email for verification
 
-need to be included
+POST Request Body
+``` json
+{
+    "username":"test",
+    "password":"testpass",
+    "email":"test@email.com"
+}
+```
+
+* For every single protected route, auth headers need to be included
 
 ``` HTTP
 Authorization: Basic base64(<username>:<password>)
@@ -104,7 +116,7 @@ GET Response Body
 {
     "trades": [
         {
-            trade_id:"1",
+            "trade_id":"1",
             "item_traded": {
                 "item_trade_id":"1",
                 "item_description": "potatoes",
