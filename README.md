@@ -166,6 +166,7 @@ PUT Request Body
 * DELETE /trade?id=xxx
     - Provide auth headers
 
+DELETE Request Body
 ```json
 {
     "trade_id":"1"
