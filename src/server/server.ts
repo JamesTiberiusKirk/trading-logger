@@ -1,22 +1,36 @@
-import { ServerConfig } from "../models/configs.model";
+import express from 'express';
+import { ServerConfig } from '../models/configs.model';
+import { IndexRoute } from '../routes/index.route';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+
 
 export class Server {
     config: ServerConfig;
-    app: Express.Application;
+    app: express.Application;
 
-    constructor(config: ServerConfig){
+    constructor(config: ServerConfig) {
         this.config = config;
+        this.app = express();
+
+        this.initMiddleware();
+        this.initRoutes();
+        this.initServer();
     }
 
-    initRoutes(){
-
+    initRoutes() {
+        const indexRoute = new IndexRoute();
+        this.app.use(this.config.baseApiUrl, indexRoute.router);
     }
 
-    initMiddleware(){
-
+    initMiddleware() {
+        this.app.use(bodyParser.json());
+        this.app.use(morgan('combined'));
     }
 
-    initServer(){
-
+    initServer() {
+        this.app.listen(this.config.port, () => {
+            console.log(`Listening at http://localhost:${this.config.port}`);
+        });
     }
 }
